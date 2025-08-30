@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduApp Pro: Advanced Learning Platform</title>
+      <style>
+        /* General Body and Layout */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5;
+            color: #333333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #008080;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .logo-icon {
+            font-size: 2.2rem;
+            color: #FFD700;
+        }
+
+        .navbar .logo:hover {
+            color: #FFD700;
+        }
+
+        .nav-links-main {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links-main li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links-main li a:hover {
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Home Page (Landing Page) Specifics */
+        .home-page-content {
+            text-align: center;
+            padding: 40px 5%;
+            background: linear-gradient(135deg, #008080, #3CB371);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-page-content h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+        }
+
+        .marquee-content {
+            animation: marquee 20s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .home-page-content p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .home-page-content img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: none;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .dashboard-sidebar {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        .dashboard-content {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-links li a {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-links li a:hover {
+            background-color: #F5F5F5;
+            color: #008080;
+        }
+
+        /* General Section Styling */
+        .dashboard-section {
+            margin-bottom: 40px;
+            display: none; /* Hide all by default, JS shows one at a time */
+        }
+        
+        .dashboard-section.active {
+            display: block;
+        }
+
+        h1, h2, h3 {
+            color: #333333;
+        }
+
+        .btn {
+            background-color: #FFD700;
+            color: #333333;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #FFC000;
+            transform: translateY(-2px);
+        }
+        
+        .btn.secondary {
+            background-color: #F0F4F7;
+            color: #555555;
+            box-shadow: none;
+        }
+
+        .btn.secondary:hover {
+            background-color: #DCDFE3;
+            transform: none;
+        }
+
+        /* Student Profile Section */
+        .student-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #008080;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .student-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #FFD700;
+            object-fit: cover;
+        }
+        
+        .profile-info h3 {
+            margin: 0;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .profile-info p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+
+        /* Courses Section */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            padding-bottom: 20px;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        
+        .course-card .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .course-card .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333333;
+        }
+
+        /* --- Quizzes & Assessments Section Styling --- */
+        .assessments-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .assessment-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .assessment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+            border-color: #FFD700;
+        }
+        
+        .assessment-card h4 {
+            font-size: 1.3rem;
+            margin: 0 0 10px 0;
+            color: #333333;
+        }
+        
+        .assessment-card p {
+            font-size: 0.95rem;
+            color: #666666;
+            margin-bottom: 15px;
+        }
+
+        .assessment-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        .assessment-tag.quiz { background-color: #008080; }
+        .assessment-tag.assignment { background-color: #FFD700; }
+        .assessment-tag.project { background-color: #3498db; }
+        .assessment-tag.certification { background-color: #e74c3c; }
+
+
+        .assignment-details {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .assignment-details h5 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+
+        .assignment-details textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        .assignment-details button {
+            margin-top: 10px;
+        }
+        
+        #assessment-container {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .quiz-progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background-color: #008080;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .option-btn {
+            background-color: #f0f4f7;
+            border: 1px solid #dcdfe3;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        
+        .option-btn:not([disabled]):hover {
+            background-color: #e2eaf0;
+        }
+
+        .option-btn.correct {
+            background-color: #D4EDDA;
+            border-color: #C3E6CB;
+            animation: pulse-correct 0.5s ease;
+        }
+
+        .option-btn.incorrect {
+            background-color: #F8D7DA;
+            border-color: #F5C6CB;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes pulse-correct {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        #feedback {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Gamification & User Stats */
+        .user-stats {
+            background-color: #008080;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .user-stats h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .level-bar {
+            background-color: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .level-progress {
+            height: 100%;
+            background-color: #FFD700;
+            transition: width 0.5s ease-in-out;
+            text-align: right;
+            padding-right: 10px;
+            box-sizing: border-box;
+            color: #333333;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            white-space: nowrap;
+        }
+
+        .points-info {
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* Progress & Resources */
+        .progress-bar {
+            height: 25px;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #FFD700;
+            transition: width 0.5s ease-in-out;
+            text-align: right;
+            padding-right: 10px;
+            box-sizing: border-box;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            white-space: nowrap;
+        }
+        
+        .progress-section .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        /* AI Assistant Section */
+        #ai-assistant {
+            margin-top: 40px;
+        }
+
+        .ai-chat-container {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .chat-message.user {
+            background-color: #008080;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-message.ai {
+            background-color: #e0e0e0;
+            color: #333333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        #chat-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        /* Personal Information Form */
+        .form-section {
+            display: grid;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #008080;
+        }
+        
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .grid-container {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .box h4 {
+            margin-top: 0;
+            color: #333333;
+        }
+
+        .box p {
+            color: #666666;
+            margin-bottom: 0;
+        }
+
+        .alert-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .alert-box.exam {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #ef4444;
+        }
+        
+        .alert-box.deadline {
+            background-color: #fefce8;
+            border: 1px solid #fde68a;
+            color: #ca8a04;
+        }
+        
+        .alert-box.lesson {
+            background-color: #f0fdf4;
+            border: 1px solid #dcfce7;
+            color: #15803d;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .badge-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .badge-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #7CFC00;
+        }
+
+        .badge-card p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .discussion-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .discussion-item {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .discussion-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .discussion-item h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333333;
+        }
+
+        .discussion-item p {
+            margin: 5px 0 10px;
+            color: #666666;
+            font-size: 0.95rem;
+        }
+
+        .discussion-item span {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        /* Video and Resource Cards */
+        .resource-card {
+            background-color: #f0f4f7;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .resource-card h3 {
+            margin-top: 0;
+            color: #333333;
+        }
+
+        .resource-card a {
+            text-decoration: none;
+            color: #333333;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .resource-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .resource-card iframe {
+            border-radius: 8px;
+        }
+
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .video-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Rewards in Progress Section */
+        .reward-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .reward-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .reward-card .icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        
+        .assessment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .assessment-card .arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .assessment-card.expanded .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .navbar .nav-links-main {
+                display: none;
+            }
+
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .dashboard-sidebar {
+                display: none;
+                position: fixed;
+                top: 65px;
+                left: 0;
+                width: 70%;
+                height: calc(100vh - 65px);
+                z-index: 999;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+                overflow-y: auto;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            
+            .dashboard-sidebar.active {
+                transform: translateX(0);
+                display: block;
+            }
+
+            .dashboard-content {
+                width: 100%;
+            }
+
+            .navbar .logo {
+                font-size: 1.5rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+       <header class="navbar">
+        <a href="#home" class="logo">
+            <span class="logo-icon">&#127891;</span> BYS Academy
+        </a>
+        <nav>
+            <ul class="nav-links-main" id="main-nav-menu">
+                <li><a href="#" onclick="showSection('dashboard-container'); showDashboardSection('dashboard-home-section');">Home</a></li>
+                <li><a href="#" onclick="showSection('dashboard-container'); showDashboardSection('dashboard-overview-section');">Dashboard</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
+    </header>
+
+    <!-- Sidebar button-->
+    <div id="dashboard-container" class="dashboard-container">
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <ul class="sidebar-links" id="sidebar-links">
+                <li><a href="#" onclick="showDashboardSection('dashboard-home-section')">🏠Home</a></li>
+                <li><a href="#" onclick="showDashboardSection('dashboard-overview-section')">📊Dashboard</a></li>
+                <li><a href="#" onclick="showDashboardSection('courses-section')">📚Courses</a></li>
+                <li><a href="#" onclick="showDashboardSection('assessments-section')">📝Assessment</a></li>
+                <li><a href="#" onclick="showDashboardSection('progress-section')">📈Progress</a></li>
+                <li><a href="#" onclick="showDashboardSection('personal-info-section')">👤Personal Info</a></li>
+                <li><a href="#" onclick="showDashboardSection('ai-assistant-section')">🤖AI Assistant</a></li>
+                <li><a href="#" onclick="showDashboardSection('discussion-section')">💬Discussion</a></li>
+                <li><a href="#" onclick="showDashboardSection('resources-section')">📂Resources/Guide</a></li>
+                <li><a href="#" onclick="showDashboardSection('security-section')">⚙️Admin</a></li>
+                <li><a href="#" onclick="showDashboardSection('final-project-certification-section')">🎓Final Project & Certification</a></li>
+                <button id="logout-btn" onclick="logout()" class="logout-sidebar">🚪Logout</button>
+            </ul>
+        </aside>
+<div id="auth-placeholder"></div>
+
+<div id="dashboard" style="display:none;">
+  <header class="dashboard-header">
+    <h1>Learning Dashboard</h1>
+  </header>
+
+           <main class="dashboard-content">
+            <section id="dashboard-home-section" class="dashboard-section active">
+                <div class="home-page-content">
+                    <div class="marquee-container">
+                        <h1 class="marquee-content">Learn Fast, Achieve More...</h1>
+                    </div>
+                    <img src="StockCake-Precision Skills Training_1756375644.jpg" alt="Students reading and doing a science practical.">
+                    <p>Welcome to Bright Young-stars Academy, the platform designed for ambitious learners. Experience personalized AI-driven learning, interactive gamification, and a community built to help you master any subject.</p>
+                    <button class="btn" onclick="showDashboardSection('personal-info-section')">Begin Your Journey</button>
+                </div>
+            </section>
+            
+            <section id="dashboard-overview-section" class="dashboard-section">
+                <h2>Dashboard Overview</h2>
+                <div class="student-profile">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Profile Picture">
+                    <div class="profile-info">
+                        <h3 id="profile-name">Hi, Sarah!</h3>
+                        <p id="profile-bio">Welcome back to your learning journey.</p>
+                        <p id="profile-location" style="font-size: 0.9rem; opacity: 0.8;"></p>
+                    </div>
+                </div>
+                <div class="user-stats">
+                    <h3>Your Profile</h3>
+                    <div class="level-bar">
+                        <div class="level-progress" id="user-level" style="width: 0;"></div>
+                    </div>
+                    <p class="points-info">Points: <span id="user-points">0</span> | Level: <span id="user-level-text">1</span></p>
+                </div>
+                <div class="grid-container" style="grid-template-columns: 1fr 1fr;">
+                    <div class="box">
+                        <h4>Upcoming Lessons</h4>
+                        <div id="upcoming-lessons">
+                            <div class="alert-box lesson">
+                                <span>Biology 101: Cell Structure</span>
+                                <span>10:00 AM, Wed</span>
+                            </div>
+                            <div class="alert-box lesson">
+                                <span>Algebra 2: Quadratic Equations</span>
+                                <span>2:30 PM, Thurs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h4>Upcoming Deadlines</h4>
+                        <div id="upcoming-deadlines">
+                            <div class="alert-box exam">
+                                <span>History Final Exam</span>
+                                <span>Dec 15</span>
+                            </div>
+                            <div class="alert-box deadline">
+                                <span>English Essay Submission</span>
+                                <span>Nov 30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 style="margin-top: 30px;">AI Recommended Quizzes</h3>
+                <div class="course-grid" id="ai-recommended-assessments">
+                    <p style="color: #666;">No recommendations yet. Complete an assessment to get started!</p>
+                </div>
+            </section>
+
+            <section id="courses-section" class="dashboard-section">
+                <h2>Explore New Courses</h2>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="StockCake-Neon Math Triangle_1756322735.jpg" alt="Mathematics Course Image">
+                        <div class="card-content">
+                            <h3>Mathematics Fundamentals</h3>
+                            <p>Master the core concepts of algebra, geometry, and calculus in an easy-to-understand way.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="StockCake-Focused Laboratory Work_1756322280.jpg" alt="Science Course Image">
+                        <div class="card-content">
+                            <h3>Introduction to Science</h3>
+                            <p>Dive into the fascinating worlds of biology, chemistry, and physics with engaging lessons.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="StockCake-Colorful Calligraphy Collection_1756322991.jpg" alt="English Course Image">
+                        <div class="card-content">
+                            <h3>Creative Writing & Grammar</h3>
+                            <p>Enhance your writing skills and refine your grammar to become a better communicator.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="StockCake-Digital Code Immersion_1756323571.jpg" alt="Coding Course Image">
+                        <div class="card-content">
+                            <h3>Web Development Basics</h3>
+                            <p>Learn to build beautiful websites from scratch using HTML, CSS, and JavaScript.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="StockCake-Coding Workstation Glow_1756323064.jpg" alt="Programming Course Image">
+                        <div class="card-content">
+                            <h3>Introduction to Python</h3>
+                            <p>Start your programming journey with Python, a versatile and beginner-friendly language.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="StockCake-Wanderlust Through Time_1756323112.jpg" alt="History Course Image">
+                        <div class="card-content">
+                            <h3>World History Overview</h3>
+                            <p>Explore major historical events and civilizations that shaped our world.</p>
+                            <a href="#" class="btn">Start Learning</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="assessments-section" class="dashboard-section">
+                <h2>Assessment</h2>
+                <p>Test your knowledge with quizzes, and submit your assignments. Completing them earns you points!</p>
+                <div id="assessments-list-container" class="assessments-container">
+                    <div class="assessment-card" onclick="startQuiz('math')">
+                        <span class="assessment-tag quiz">Quiz</span>
+                        <h4>Mathematics Quiz</h4>
+                        <p>Challenge your math skills with this fun quiz!</p>
+                    </div>
+                    <div class="assessment-card" onclick="startQuiz('science')">
+                        <span class="assessment-tag quiz">Quiz</span>
+                        <h4>Science Quiz</h4>
+                        <p>Explore the world of science and test your knowledge!</p>
+                    </div>
+                    <div class="assessment-card assignment-card" id="english-assignment-card" onclick="toggleAssignment('english-assignment-card')">
+                        <div class="assessment-card-header">
+                            <div>
+                                <span class="assessment-tag assignment">Assignment</span>
+                                <h4>English Essay</h4>
+                                <p>Write an essay on a given topic and submit it here.</p>
+                            </div>
+                             <span class="arrow">&#9660;</span>
+                        </div>
+                        <div class="assignment-details" id="english-assignment-details">
+                            <h5>Instructions</h5>
+                            <p>Write a 500-word essay on the theme of "Resilience in Literature."</p>
+                            <textarea placeholder="Type or paste your essay here..."></textarea>
+                            <button class="btn">Submit Assignment</button>
+                        </div>
+                    </div>
+                    <div class="assessment-card" onclick="startQuiz('history')">
+                        <span class="assessment-tag quiz">Quiz</span>
+                        <h4>History Quiz</h4>
+                        <p>Journey through time and test your knowledge of historical events.</p>
+                    </div>
+                    <div class="assessment-card" onclick="startQuiz('geography')">
+                        <span class="assessment-tag quiz">Quiz</span>
+                        <h4>Geography Quiz</h4>
+                        <p>Test your knowledge of countries, capitals, and landmarks!</p>
+                    </div>
+                    <div class="assessment-card assignment-card" id="webdev-assignment-card" onclick="toggleAssignment('webdev-assignment-card')">
+                        <div class="assessment-card-header">
+                            <div>
+                                <span class="assessment-tag assignment">Assignment</span>
+                                <h4>Web Dev Portfolio</h4>
+                                <p>Submit a link to your personal web development project.</p>
+                            </div>
+                             <span class="arrow">&#9660;</span>
+                        </div>
+                        <div class="assignment-details" id="webdev-assignment-details">
+                            <h5>Instructions</h5>
+                            <p>Create a simple personal portfolio website and submit the link.</p>
+                            <input type="url" placeholder="Enter link to your project">
+                            <button class="btn">Submit Assignment</button>
+                        </div>
+                    </div>
+                    <div class="assessment-card" onclick="startQuiz('computer-science')">
+                        <span class="assessment-tag quiz">Quiz</span>
+                        <h4>Computer Science Quiz</h4>
+                        <p>A quiz on fundamental concepts of computing.</p>
+                    </div>
+                    <div class="assessment-card assignment-card" id="art-assignment-card" onclick="toggleAssignment('art-assignment-card')">
+                        <div class="assessment-card-header">
+                            <div>
+                                <span class="assessment-tag assignment">Assignment</span>
+                                <h4>Art Sketchbook</h4>
+                                <p>Submit a digital copy of your sketchbook pages.</p>
+                            </div>
+                            <span class="arrow">&#9660;</span>
+                        </div>
+                        <div class="assignment-details" id="art-assignment-details">
+                            <h5>Instructions</h5>
+                            <p>Create at least 5 sketches on the theme of "Nature" and upload a single PDF or image file.</p>
+                            <input type="file" id="art-upload-file">
+                            <button class="btn">Upload & Submit</button>
+                        </div>
+                    </div>
+                    <div class="assessment-card assignment-card" id="music-assignment-card" onclick="toggleAssignment('music-assignment-card')">
+                        <div class="assessment-card-header">
+                            <div>
+                                <span class="assessment-tag assignment">Assignment</span>
+                                <h4>Music Theory Analysis</h4>
+                                <p>Analyze a musical piece and write a report.</p>
+                            </div>
+                            <span class="arrow">&#9660;</span>
+                        </div>
+                        <div class="assignment-details" id="music-assignment-details">
+                            <h5>Instructions</h5>
+                            <p>Listen to "Für Elise" by Beethoven. Identify the key signature, time signature, and a minimum of three musical motifs. Write a short report (200-300 words) and submit it.</p>
+                            <textarea placeholder="Type or paste your analysis here..."></textarea>
+                            <button class="btn">Submit Assignment</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quiz-container" style="display: none;">
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                    </div>
+                    <div id="quiz-content">
+                        </div>
+                </div>
+            </section>
+
+            <section id="progress-section" class="dashboard-section">
+                <h2>Your Learning Progress</h2>
+                <p>Track your progress and see how far you've come.</p>
+                <h3>Math Fundamentals</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="math-progress" style="width: 0;"></div>
+                </div>
+                <h3>Science Basics</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="science-progress" style="width: 0;"></div>
+                </div>
+                <h3>English & Writing</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="english-progress" style="width: 0;"></div>
+                </div>
+                <h3>Web Development</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="webdev-progress" style="width: 0;"></div>
+                </div>
+                <h3>Python Programming</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="python-progress" style="width: 0;"></div>
+                </div>
+                <h3>World History</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="history-progress" style="width: 0;"></div>
+                </div>
+                <h3>Geography</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="geography-progress" style="width: 0;"></div>
+                </div>
+                <h3>Computer Science</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="computer-science-progress" style="width: 0;"></div>
+                </div>
+                <h3 style="margin-top: 40px;">Your Badges</h3>
+                <div id="badges-container" class="badge-grid">
+                    <p style="color: #666;">Complete activities to earn badges!</p>
+                </div>
+                <h3 style="margin-top: 40px;">Available Rewards</h3>
+                <p>Earn more points to unlock these badges!</p>
+                 <div id="rewards-container" class="reward-grid">
+                     <div class="reward-card">
+                        <div class="icon">&#127894;</div>
+                        <h4>Quiz Master Badge</h4>
+                        <p>Cost: 100 Points</p>
+                        <button class="btn" onclick="redeemReward(100, 'Quiz Master')">Redeem</button>
+                    </div>
+                    <div class="reward-card">
+                        <div class="icon">&#128640;</div>
+                        <h4>Rocket Learner Badge</h4>
+                        <p>Cost: 250 Points</p>
+                        <button class="btn" onclick="redeemReward(250, 'Rocket Learner')">Redeem</button>
+                    </div>
+                 </div>
+            </section>
+
+            <section id="personal-info-section" class="dashboard-section">
+                <h2>Personal Information</h2>
+                <p>Update your personal details here. This information will be displayed on your profile.</p>
+                <form id="personal-info-form" class="form-section">
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state-origin">State of Origin</label>
+                        <input type="text" id="state-origin" placeholder="e.g., California">
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" placeholder="e.g., United States">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender">
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="marital-status">Marital Status</label>
+                        <select id="marital-status">
+                            <option value="">Select...</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Short Bio</label>
+                        <textarea id="bio" rows="4" placeholder="Tell us a little about yourself..."></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn">Save Profile</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="discussion-section" class="dashboard-section">
+                <h2>Discussion Forum</h2>
+                <p>Collaborate with your peers, ask questions, and share your knowledge.</p>
+                <form class="form-section">
+                    <div class="form-group">
+                        <label for="discussion-topic">New Topic</label>
+                        <input type="text" id="discussion-topic" placeholder="Enter topic title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="discussion-post">Your Post</label>
+                        <textarea id="discussion-post" rows="5" placeholder="Write your message here..."></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn">Post</button>
+                    </div>
+                </form>
+                <h3 style="margin-top: 40px;">Recent Discussions</h3>
+                <div id="discussions-container" class="discussion-list">
+                    <div class="discussion-item">
+                        <h4>How to debug a Python script?</h4>
+                        <p>I'm having trouble with my code. Any tips on how to find bugs efficiently?</p>
+                        <span>Posted by: Alex | 5 replies</span>
+                    </div>
+                    <div class="discussion-item">
+                        <h4>Best study techniques for history exams</h4>
+                        <p>What methods do you use to remember dates and facts for exams?</p>
+                        <span>Posted by: Chris | 12 replies</span>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="ai-assistant-section" class="dashboard-section">
+                <h2>AI Assistant</h2>
+                <p>Need help with a concept or a quick explanation? Ask our AI assistant!</p>
+                <div class="ai-chat-container">
+                    <div id="chat-messages">
+                        <div class="chat-message ai">Hello! I'm your AI learning assistant. How can I help you today?</div>
+                    </div>
+                    <form id="chat-form">
+                        <input type="text" id="chat-input" placeholder="Type your question..." aria-label="Ask AI Assistant">
+                        <button type="submit" class="btn">Send</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="resources-section" class="dashboard-section">
+                <h2>Helpful Resources</h2>
+                <p>Access a curated library of articles, videos, and study guides to help you on your learning journey.</p>
+                <div class="course-grid">
+                    <div class="resource-card">
+                        <img src="StockCake-Following Written Instructions_1756324512.jpg" alt="Cartoon of a student studying books">
+                        <h3>Study Guides</h3>
+                        <p>Study the Handout forwarded to your email as this this will guide you on how to navigate the LMS.</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="video-player-container">
+                            <iframe width="560" height="315" src="PixVerse_V5_Image_Text_360P_generate_an_animat.mp4" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <h3>Video Library</h3>
+                        <p>Watch this illustration video of water cycle. The water cycle isn’t just science – it’s life. It shapes our climate, feeds our crops, and sustains every living thing on Earth. Next time you sip a glass of water, imagine the thousands of years it has traveled through this endless loop!
+                    </div>
+                    <div class="resource-card">
+                        <img src="StockCake-Circular Business Meeting_1756388858(1).jpg" alt="Cartoon of diverse people in a chatroom">
+                        <h3>Community Forums</h3>
+                        <p>Connect with other learners and ask questions.</p>
+                    </div>
+                    <div class="resource-card">
+                        <img src="StockCake-DNA Helix Close-Up_1756389135.jpg" alt="Cartoon of a person drawing on a tablet">
+                        <h3>Interactive Biology Diagram</h3>
+                        <a href="https://byjus.com/biology/dna-structure/" target="_blank">Explore the Human Body &#8599;</a>
+                        <p>A 3D interactive model to visualize human anatomy.</p>
+                    </div>
+                    <div class="resource-card">
+                        <img src="StockCake-Coding After Hours_1756389281.jpg" alt="Cartoon of a person coding">
+                        <h3>Python Coding Animation</h3>
+                        <a href="https://www.halvorsen.blog/documents/programming/python/resources/Python%20Programming.pdf"   target="_blank">Visualize Your Code &#8599;</a>
+                        <p>See how your Python code executes step-by-step.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="security-section" class="dashboard-section">
+                <h2>Admin Security</h2>
+                <p>This section is for administrative tasks, such as managing users.</p>
+                <form id="user-management-form" class="form-section">
+                    <h3>Delete User</h3>
+                    <div class="form-group">
+                        <label for="user-id">User ID to Delete</label>
+                        <input type="text" id="user-id" placeholder="Enter user ID (e.g., 12345)" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn" style="background-color: #e74c3c;">Delete User</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="final-project-certification-section" class="dashboard-section">
+                <h2>Final Project & Certification</h2>
+                <p>Complete your final project to earn your course completion certificate.</p>
+                <div class="form-section">
+                    <h4>Submit Your Final Project</h4>
+                    <p>Your final project is a comprehensive portfolio demonstrating all skills learned throughout the course. Upon successful submission and review, you will be awarded your official course certification. Submit your project here to get started.</p>
+                    <div class="form-group">
+                        <label for="project-link">Project Portfolio Link</label>
+                        <input type="url" id="project-link" placeholder="Enter link to your project portfolio" required>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="btn">Submit Project</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="leaderboard-section" class="dashboard-section">
+                <h2>Leaderboard</h2>
+                <p>See how you rank against other learners!</p>
+                <div class="box">
+                    <ol class="leaderboard-list">
+                        <li class="leaderboard-item">
+                            <span>1. Alex A.</span>
+                            <span>2500 points</span>
+                        </li>
+                        <li class="leaderboard-item">
+                            <span>2. Sarah J.</span>
+                            <span id="my-points-leaderboard">0 points</span>
+                        </li>
+                        <li class="leaderboard-item">
+                            <span>3. Michael B.</span>
+                            <span>1980 points</span>
+                        </li>
+                        <li class="leaderboard-item">
+                            <span>4. Emily R.</span>
+                            <span>1750 points</span>
+                        </li>
+                        <li class="leaderboard-item">
+                            <span>5. David L.</span>
+                            <span>1500 points</span>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<!--Initialize Supabase-->
+<script>
+  const supabase_url = "https://svbixdhkdvksgvnjdiyq.supabase.co";
+  const supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Yml4ZGhrZHZrc2d2bmpkaXlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzOTcwMzAsImV4cCI6MjA3MTk3MzAzMH0.y2-3FRlyuVDAblwyYpRJ8ujhr8nWBhma7s6AG2s1R9U";    
+
+  // ✅ Correct way: extract createClient
+  const { createClient } = supabase;
+  const supabaseClient = createClient(supabase_url, supabase_key);
+</script>
+
+<script>
+  async function fetchUsers() {
+    try {
+      // ✅ Fixed: renamed to test_users (avoid spaces in table names)
+      const { data, error } = await supabaseClient.from('users').select('*');
+      if (error) {
+        console.error("Supabase error:", error.message);
+        return;
+      }
+
+      console.log('Fetched users:', data);
+      return data;
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    }
+  }
+  fetchUsers();
+</script>
+
+     <script>
+        // Data for Quizzes and AI
+        const quizzes = {
+            math: [
+                { question: "What is 7 + 8?", options: ["14", "15", "16", "13"], answer: "15" },
+                { question: "What is 9 * 6?", options: ["54", "63", "48", "72"], answer: "54" },
+                { question: "What is the square root of 81?", options: ["8", "9", "10", "7"], answer: "9" }
+            ],
+            science: [
+                { question: "What planet is known as the 'Red Planet'?", options: ["Mars", "Venus", "Jupiter", "Saturn"], answer: "Mars" },
+                { question: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "NaCl"], answer: "H2O" },
+                { question: "Which organ pumps blood throughout the body?", options: ["Lungs", "Brain", "Heart", "Liver"], answer: "Heart" }
+            ],
+            english: [
+                { question: "Which of these is a noun?", options: ["Run", "Quickly", "House", "Happy"], answer: "House" },
+                { question: "What is the past tense of 'go'?", options: ["Goes", "Gone", "Went", "Going"], answer: "Went" },
+                { question: "Identify the adjective: 'The big red car.'", options: ["The", "Big", "Car", "Red"], answer: "Big" }
+            ],
+            history: [
+                { question: "Who was the first President of the United States?", options: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], answer: "George Washington" },
+                { question: "In which year did Nigeria gain independence?", options: ["1950", "1960", "1970", "1980"], answer: "1960" }
+            ],
+            geography: [
+                { question: "Which is the largest continent by land area?", options: ["Africa", "Asia", "North America", "Europe"], answer: "Asia" },
+                { question: "What is the capital of Japan?", options: ["Seoul", "Beijing", "Tokyo", "Bangkok"], answer: "Tokyo" },
+                { question: "Which ocean is the largest?", options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], answer: "Pacific Ocean" }
+            ],
+            'computer-science': [
+                { question: "What does 'CPU' stand for?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Computer Program Utility"], answer: "Central Processing Unit" },
+                { question: "What is a 'bug' in programming?", options: ["An error in a program", "A type of virus", "A hardware component", "A programming language"], answer: "An error in a program" },
+                { question: "Which language is used for styling web pages?", options: ["JavaScript", "Python", "HTML", "CSS"], answer: "CSS" }
+            ]
+        };
+        const courseIds = {
+            'math': 'Mathematics Fundamentals',
+            'science': 'Introduction to Science',
+            'english': 'Creative Writing & Grammar',
+            'history': 'World History Overview',
+            'geography': 'Geography',
+            'computer-science': 'Computer Science',
+        };
+        
+        const badgeIcons = {
+            'Quiz Master': '&#127894;',
+            'Rocket Learner': '&#128640;',
+            'Math Whiz': '&#128293;',
+            'Science Pro': '&#129514;',
+            'History Buff': '&#128197;'
+        };
+
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentQuizId = '';
+        let userProgress = {
+            'math': 0,
+            'science': 0,
+            'english': 0,
+            'webdev': 0,
+            'python': 0,
+            'history': 0,
+            'geography': 0,
+            'computer-science': 0
+        };
+        let userPoints = 0;
+        let userLevel = 1;
+        const POINTS_PER_CORRECT_ANSWER = 10;
+        const POINTS_PER_LEVEL = 100;
+        let completedQuizzes = [];
+        let earnedBadges = [];
+        let userInfo = {
+            name: "Sarah",
+            state: "Lagos",
+            country: "Nigeria",
+            gender: "Female",
+            maritalStatus: "Single",
+            bio: "Welcome back to your learning journey."
+        };
+        
+        // Admin and User ID for Security Section
+        const isAdmin = true; // Set to true to enable admin section
+        const userId = '12345'; // Example user ID
+
+        // --- Section Visibility Logic ---
+        function showSection(sectionId) {
+            const dashboard = document.getElementById('dashboard-container');
+            dashboard.style.display = 'grid'; // Ensure dashboard is visible
+        }
+
+        function showDashboardSection(sectionId) {
+            const sections = document.querySelectorAll('.dashboard-content .dashboard-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            // Close mobile sidebar if open
+            const sidebar = document.getElementById('dashboard-sidebar');
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+
+            // Update specific sections on show
+            if (sectionId === 'progress-section') {
+                renderBadges();
+            }
+            if (sectionId === 'leaderboard-section') {
+                updateLeaderboard();
+            }
+        }
+
+        // Navigation Toggle for Mobile (Sidebar)
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('dashboard-sidebar');
+
+        menuToggle.addEventListener('click', () => {
+             sidebar.classList.toggle('active');
+        });
+
+        // --- Assessments Logic ---
+        function startQuiz(quizId) {
+            document.getElementById('assessments-list-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+
+            currentQuiz = quizzes[quizId];
+            currentQuizId = quizId;
+            currentQuestionIndex = 0;
+            score = 0;
+            const quizContent = document.getElementById('quiz-content');
+            quizContent.innerHTML = `
+                <div id="question-container">
+                    <h3 id="quiz-question"></h3>
+                    <div id="quiz-options"></div>
+                    <p id="feedback"></p>
+                </div>
+            `;
+            displayQuestion();
+            updateQuizProgress();
+        }
+
+        function toggleAssignment(assignmentCardId) {
+            const allAssignments = document.querySelectorAll('.assignment-card');
+            allAssignments.forEach(card => {
+                if (card.id !== assignmentCardId) {
+                    card.classList.remove('expanded');
+                    card.querySelector('.assignment-details').style.display = 'none';
+                }
+            });
+
+            const assignmentCard = document.getElementById(assignmentCardId);
+            assignmentCard.classList.toggle('expanded');
+            const details = assignmentCard.querySelector('.assignment-details');
+            details.style.display = assignmentCard.classList.contains('expanded') ? 'block' : 'none';
+        }
+
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= currentQuiz.length) {
+                endQuiz();
+                return;
+            }
+
+            const currentQuestion = currentQuiz[currentQuestionIndex];
+            document.getElementById('quiz-question').textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(button, option, currentQuestion.answer);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            updateQuizProgress();
+        }
+
+        function updateQuizProgress() {
+            const progress = (currentQuestionIndex / currentQuiz.length) * 100;
+            document.getElementById('quiz-progress-fill').style.width = `${progress}%`;
+        }
+
+        function checkAnswer(button, selectedOption, correctAnswer) {
+            const feedbackEl = document.getElementById('feedback');
+            const optionButtons = document.querySelectorAll('#quiz-options .option-btn');
+            
+            optionButtons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correctAnswer) {
+                    btn.classList.add('correct');
+                } else if (btn.textContent === selectedOption) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (selectedOption === correctAnswer) {
+                score++;
+                userPoints += POINTS_PER_CORRECT_ANSWER;
+                feedbackEl.textContent = "Correct! ✅ You earned " + POINTS_PER_CORRECT_ANSWER + " points!";
+            } else {
+                feedbackEl.textContent = `Incorrect. The correct answer was: ${correctAnswer} ❌`;
+            }
+            updateUserStats();
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 1500);
+        }
+
+        function endQuiz() {
+            const quizContent = document.getElementById('quiz-content');
+            quizContent.innerHTML = `
+                <h3>Quiz Completed!</h3>
+                <p>You scored ${score} out of ${currentQuiz.length}.</p>
+                <button class="btn" onclick="resetAssessments()">Back to Assignments & Projects</button>
+            `;
+            const newProgress = Math.round((score / currentQuiz.length) * 100);
+            userProgress[currentQuizId] = newProgress;
+            updateProgress(currentQuizId, newProgress);
+            document.getElementById('quiz-progress-fill').style.width = '100%';
+
+            if (!completedQuizzes.includes(currentQuizId)) {
+                completedQuizzes.push(currentQuizId);
+                const recommendation = getAiRecommendation();
+                if (recommendation) {
+                    addRecommendationToDashboard(recommendation);
+                }
+            }
+            
+            if (newProgress === 100) {
+                 awardBadge(`${courseIds[currentQuizId]} Master`, badgeIcons['Quiz Master']);
+            }
+        }
+        
+        function resetAssessments() {
+            document.getElementById('assessments-list-container').style.display = 'grid';
+            document.getElementById('quiz-container').style.display = 'none';
+        }
+
+        // --- Gamification Logic ---
+        function updateUserStats() {
+            document.getElementById('user-points').textContent = userPoints;
+            document.getElementById('my-points-leaderboard').textContent = `${userPoints} points`;
+            userLevel = Math.floor(userPoints / POINTS_PER_LEVEL) + 1;
+            document.getElementById('user-level-text').textContent = userLevel;
+            const levelProgress = document.getElementById('user-level');
+            const levelPercentage = (userPoints % POINTS_PER_LEVEL) / POINTS_PER_LEVEL * 100;
+            levelProgress.style.width = `${levelPercentage}%`;
+            levelProgress.textContent = `Level ${userLevel}`;
+        }
+        
+        function awardBadge(badgeName, icon) {
+            if (!earnedBadges.some(b => b.name === badgeName)) {
+                earnedBadges.push({ name: badgeName, icon: icon });
+                alert(`Congratulations! You earned a new badge: "${badgeName}"`);
+                renderBadges();
+            }
+        }
+        
+        function renderBadges() {
+            const container = document.getElementById('badges-container');
+            container.innerHTML = '';
+            if (earnedBadges.length === 0) {
+                container.innerHTML = `<p style="color: #666;">Complete activities to earn badges!</p>`;
+            } else {
+                earnedBadges.forEach(badge => {
+                    const badgeCard = document.createElement('div');
+                    badgeCard.className = 'badge-card';
+                    badgeCard.innerHTML = `
+                        <div class="icon">${badge.icon}</div>
+                        <h4>${badge.name}</h4>
+                    `;
+                    container.appendChild(badgeCard);
+                });
+            }
+        }
+        
+        function redeemReward(cost, rewardName) {
+            if (userPoints >= cost) {
+                userPoints -= cost;
+                updateUserStats();
+                awardBadge(rewardName, badgeIcons[rewardName]);
+                alert(`You have successfully redeemed "${rewardName}" for ${cost} points!`);
+            } else {
+                alert(`You do not have enough points. You need ${cost} points to redeem this reward.`);
+            }
+        }
+
+        function updateLeaderboard() {
+            const myRank = 2; // Fixed rank for demo purposes
+            const leaderboardPoints = document.getElementById('my-points-leaderboard');
+            leaderboardPoints.textContent = `${userPoints} points`;
+        }
+
+        // --- Progress Bar Logic ---
+        function updateProgress(id, percentage) {
+            const progressFill = document.getElementById(`${id}-progress`);
+            if (progressFill) {
+                progressFill.style.width = `${percentage}%`;
+                progressFill.textContent = `${Math.round(percentage)}%`;
+            }
+        }
+
+        // --- Personal Information Form Logic ---
+        document.getElementById('personal-info-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            userInfo.name = document.getElementById('full-name').value || userInfo.name;
+            userInfo.state = document.getElementById('state-origin').value || userInfo.state;
+            userInfo.country = document.getElementById('country').value || userInfo.country;
+            userInfo.gender = document.getElementById('gender').value || userInfo.gender;
+            userInfo.maritalStatus = document.getElementById('marital-status').value || userInfo.maritalStatus;
+            userInfo.bio = document.getElementById('bio').value || userInfo.bio;
+            updateProfileInfo();
+            alert('Your profile has been saved!');
+        });
+
+        function updateProfileInfo() {
+            document.getElementById('profile-name').textContent = `Hi, ${userInfo.name}!`;
+            document.getElementById('profile-bio').textContent = userInfo.bio;
+            const locationInfo = `From ${userInfo.state}, ${userInfo.country}`;
+            document.getElementById('profile-location').textContent = userInfo.state && userInfo.country ? locationInfo : '';
+        }
+
+        // --- AI Assistant Logic ---
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const chatInput = document.getElementById('chat-input');
+            const userMessage = chatInput.value.trim();
+            chatInput.value = '';
+
+            if (userMessage) {
+                addMessageToChat(userMessage, 'user');
+                const aiResponse = await getAiResponse(userMessage);
+                addMessageToChat(aiResponse, 'ai');
+            }
+        });
+
+        function addMessageToChat(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', sender);
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        }
+
+        async function getAiResponse(userQuery) {
+            userQuery = userQuery.toLowerCase();
+            if (userQuery.includes("hello") || userQuery.includes("hi")) {
+                return "Hello! I'm your AI learning assistant. How can I help you today?";
+            } else if (userQuery.includes("math")) {
+                return "I can help with math! What topic are you interested in: algebra, geometry, or calculus?";
+            } else if (userQuery.includes("science")) {
+                return "Science is fascinating! Do you have questions about biology, chemistry, or physics?";
+            } else if (userQuery.includes("history")) {
+                return "Which historical period or event would you like to know more about?";
+            } else if (userQuery.includes("course")) {
+                return "You can find all our courses listed under the 'Courses' section in the sidebar.";
+            } else if (userQuery.includes("assessment")) {
+                return "All your quizzes and assignments are located in the 'Assessment' section.";
+            } else if (userQuery.includes("progress")) {
+                return "Your learning progress is shown in the 'Progress' section, detailing your achievements in each course.";
+            } else if (userQuery.includes("thank you") || userQuery.includes("thanks")) {
+                return "You're welcome! Happy to help.";
+            } else if (userQuery.includes("abuja")) {
+                 return "Abuja is the capital city of Nigeria, located in the Federal Capital Territory. It's known for its planned infrastructure and Aso Rock.";
+            } else if (userQuery.includes("recommend")) {
+                const recommendation = getAiRecommendation();
+                if (recommendation) {
+                    return `Based on your recent activity, I recommend the '${recommendation}' quiz.`;
+                } else {
+                    return "I don't have enough data to make a recommendation yet. Try completing an assessment first!";
+                }
+            } else {
+                return "I'm still learning, but I'll do my best to help! Could you please rephrase your question or ask about a specific subject?";
+            }
+        }
+        
+        function getAiRecommendation() {
+            const availableQuizzes = Object.keys(quizzes);
+            const uncompletedQuizzes = availableQuizzes.filter(id => !completedQuizzes.includes(id));
+            if (uncompletedQuizzes.length > 0) {
+                const randomQuizId = uncompletedQuizzes[Math.floor(Math.random() * uncompletedQuizzes.length)];
+                return courseIds[randomQuizId];
+            }
+            return null;
+        }
+
+        function addRecommendationToDashboard(recommendation) {
+            const container = document.getElementById('ai-recommended-assessments');
+            if (container) {
+                container.innerHTML = `
+                    <div class="course-card">
+                        <div class="card-content">
+                            <h3 style="color: #FFD700;">AI Recommended</h3>
+                            <p>Based on your last quiz, we recommend you try:</p>
+                            <h4>${recommendation} Quiz</h4>
+                            <button class="btn" onclick="showDashboardSection('assessments-section');">Take Quiz</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Security Form Logic ---
+        document.getElementById('user-management-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userIdToDelete = document.getElementById('user-id').value;
+            if (userIdToDelete) {
+                alert(`User with ID ${userIdToDelete} has been "deleted". (This is a mock action)`);
+                document.getElementById('user-id').value = '';
+            } else {
+                alert('Please enter a User ID.');
+            }
+        });
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('dashboard-container');
+            showDashboardSection('dashboard-home-section');
+            updateUserStats();
+            updateProfileInfo();
+            updateProgress('math', 50);
+            updateProgress('science', 25);
+            updateProgress('english', 75);
+            updateProgress('webdev', 40);
+            updateProgress('python', 60);
+            updateProgress('history', 30);
+            updateProgress('geography', 0);
+            updateProgress('computer-science', 0);
+            updateLeaderboard();
+        });
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabase_URL = "https://svbixdhkdvksgvnjdiyq.supabase.co";
+  const supabase_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Yml4ZGhrZHZrc2d2bmpkaXlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzOTcwMzAsImV4cCI6MjA3MTk3MzAzMH0.y2-3FRlyuVDAblwyYpRJ8ujhr8nWBhma7s6AG2s1R9U";
+  const supabaseclient = supabase.createClient(supabase_url, supabase_key);
+
+  // Load auth.html into placeholder
+  fetch("auth.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("auth-placeholder").innerHTML = html;
+      document.getElementById("register-btn").addEventListener("click", register);
+      document.getElementById("login-btn").addEventListener("click", login);
+    });
+
+  async function register() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const { error } = await supabaseClient.auth.signUp({ email, password });
+    if (error) alert("Registration failed: " + error.message);
+    else alert("Check your email to confirm registration.");
+  }
+
+  async function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      alert("Login failed: " + error.message);
+    } else {
+      document.getElementById("auth-placeholder").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+    }
+  }
+
+  async function logout() {
+    await supabaseClient.auth.signOut();
+    document.getElementById("auth-placeholder").style.display = "block";
+    document.getElementById("dashboard").style.display = "none";
+  }
+</script>
+</body>
+</html>
